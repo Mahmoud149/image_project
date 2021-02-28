@@ -1,14 +1,14 @@
-import ttk
-from Tkconstants import RIDGE, X, BOTTOM, N, S, E, W, NE, BOTH, TOP, NW
-from Tkinter import Tk, Canvas
+import tkinter
+from tkinter import ttk
+from tkinter.constants import RIDGE, X, BOTTOM, N, S, E, W, NE, BOTH, TOP, NW
+from tkinter import Tk, Canvas
 import numpy as np
-import tkMessageBox
-from tkFileDialog import askopenfilename
+import tkinter.messagebox as tkMessageBox
+from tkinter.filedialog import askopenfilename
 
 from matplotlib.pyplot import imshow, show, figure, bar, subplot
-import tkSimpleDialog
+import tkinter.simpledialog as tkSimpleDialog
 import cv2
-import Tkinter
 from PIL import Image, ImageTk
 
 
@@ -32,7 +32,7 @@ class image:
                             [1. / 9, 1. / 9, 1. / 9]])
 
     def browse(self):
-        for i in xrange(1, 4):
+        for i in range(1, 4):
             Fname = askopenfilename(filetypes=(("JPG files", "*.jpg;*.jpeg"),
                                                ("PNG files", "*.png"),
                                                ("All files", "*.*")))
@@ -70,8 +70,8 @@ class image:
         if self.F:
             Histogram = np.zeros((256))
             [r, c] = self.gim.shape
-            for i in xrange(r):
-                for j in xrange(c):
+            for i in range(r):
+                for j in range(c):
                     if self.gim[i, j] < 1:
                         continue
                     else:
@@ -79,7 +79,7 @@ class image:
                     Histogram[t] += 1
                     # print Histogram
             # Hist = Histogram.tolist()
-            range = [x for x in xrange(len(Histogram))]
+            range = [x for x in range(len(Histogram))]
             # p = collections.Counter(Hist)
             # print p
             bar(range, Histogram, fc='k', ec='k')
@@ -94,11 +94,11 @@ class image:
         self.ker = np.array([[0, 0, 0],
                              [0, 0, 0],
                              [0, 0, 0]])
-        for i in xrange(3):
-            for j in xrange(3):
+        for i in range(3):
+            for j in range(3):
                 self.ker[i, j] = tkSimpleDialog.askinteger('Please Insert Value',
                                                            'Insert Element {},{} : '.format(i + 1, j + 1))
-        print self.ker
+        print(self.ker)
 
     def convolve(self, image, row, col, Kernal):
         temp = image[row - 1:row - 1 + 3, col - 1:col - 1 + 3]
@@ -119,8 +119,8 @@ class image:
             np.pad(self.gim, [(r, r), (c, c)], mode='constant')
             output = np.zeros(self.gim.shape, dtype=np.uint8)
             (r1, c1) = output.shape
-            for i in xrange(1, r1 - r):
-                for j in xrange(1, c1 - c):
+            for i in range(1, r1 - r):
+                for j in range(1, c1 - c):
                     output[i, j] = self.convolve(self.gim, i, j, self.ker)
             imshow(output, cmap='Greys_r')
             show()
@@ -145,8 +145,8 @@ class image:
             np.pad(im, [(r, r), (c, c)], mode='constant')
             output = np.zeros(im.shape, dtype=np.uint8)
             (r1, c1) = output.shape
-            for i in xrange(1, r1 - r):
-                for j in xrange(1, c1 - c):
+            for i in range(1, r1 - r):
+                for j in range(1, c1 - c):
                     output[i, j] = self.convolve(im, i, j, self.Km)
             return output
         else:
@@ -186,8 +186,8 @@ class image:
             y = self.filt()
             output = np.zeros(y.shape, dtype=np.uint8)
             [r, c] = x.shape
-            for i in xrange(r):
-                for j in xrange(c):
+            for i in range(r):
+                for j in range(c):
                     gx = x[i, j]
                     gy = y[i, j]
                     g = ((gx ** 2) + (gy ** 2)) ** .5
@@ -209,8 +209,8 @@ class image:
             [r, c] = b.shape
             w = [255, 255, 255]
             mask = b == 255
-            for i in xrange(r):
-                for j in xrange(c):
+            for i in range(r):
+                for j in range(c):
                     if mask[i, j]:
                         output[i, j] = self.im[i, j]
                     else:
